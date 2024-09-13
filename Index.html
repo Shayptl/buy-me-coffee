@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>תמכו בשי - Shay Digital Services</title>
+    <link rel="icon" href="https://i.ibb.co/f8XrnHj/image.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css">
+    <style>
+        :root {
+            --primary-color: #6C5CE7;
+            --secondary-color: #00B894;
+            --background-color: #DFE6E9;
+            --text-color: #2D3436;
+            --accent-color: #FD79A8;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 100px 0 50px;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+        }
+
+        header::after {
+            content: 'ב"ה';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 1em;
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
+
+        .intro {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin: -50px auto 50px;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .services {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+
+        .service {
+            flex-basis: calc(50% - 20px);
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .service-logo {
+            width: 80px;
+            /* או גודל אחר שמתאים לעיצוב שלך */
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .service::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(108, 92, 231, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .service:hover::before {
+            top: -100%;
+            left: -100%;
+        }
+
+        .service:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta {
+            text-align: center;
+            margin-bottom: 70px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            padding: 60px;
+            border-radius: 15px;
+            color: var(--white);
+        }
+
+        .cta p {
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(253, 121, 168, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(253, 121, 168, 0.6);
+        }
+
+        .social-links {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            margin: 0 15px;
+            color: var(--primary-color);
+            font-size: 2em;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background-color: var(--text-color);
+            color: var(--white);
+        }
+
+        /* Pulsing animation for the donation button */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Testimonial Carousel */
+        .testimonial-carousel {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial {
+            flex: 0 0 100%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .testimonial.active {
+            opacity: 1;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background: var(--accent-color);
+        }
+
+        .carousel-btn.prev {
+            left: 10px;
+        }
+
+        .carousel-btn.next {
+            right: 10px;
+        }
+
+        /* Feedback Form */
+        .feedback-form {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-submit {
+            text-align: center;
+        }
+
+        /* Floating Donation Button */
+        .floating-btn {
+            position: fixed;
+            bottom: 23px;
+            right: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .service {
+                flex-basis: 100%;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .subtitle {
+                font-size: 1.2em;
+            }
+
+            .cta,
+            .feedback-form,
+            .testimonial-carousel {
+                padding: 30px;
+            }
+
+            .floating-btn {
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fadeInUp {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .profile-pic {
+            width: 30px;
+            /* או ערך אחר לפי גודל התמונה הרצוי */
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <img src="https://i.ibb.co/BBxdNs3/Green.png" alt="Shay Digital Services Logo" class="logo fadeInUp">
+            <h1 class="fadeInUp">Shay digital services</h1>
+            <p class="subtitle fadeInUp">פתרונות אוטומציה מתקדמים לעסקים</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="intro fadeInUp">
+            <h2>ברוכים הבאים, אני שי</h2>
+            <p>כמפתח אוטומציות מוביל ונציג של Green API, אני מקדיש את עצמי לפיתוח פתרונות חדשניים ולחיזוק קהילת מפתחי
+                האוטומציות בישראל. הידע והניסיון שלי עומדים לרשותכם.</p>
+        </section>
+
+        <section class="services">
+            <div class="service fadeInUp" style="animation-delay: 0.2s;">
+                <img src="https://i.ibb.co/K0JscxC/logo-make.png" alt="לוגו של Make.com Integromat" class="service-logo">
+                <h3>אוטומציות לעסקים</h3>
+                <p>יצירת פתרונות אוטומציה מתקדמים באמצעות Make (לשעבר Integromat) לייעול תהליכים עסקיים ולהגברת
+                    הפרודוקטיביות.</p>
+            </div>
+            <div class="service fadeInUp" style="animation-delay: 0.4s;">
+                <img src="https://i.ibb.co/2tgQ0MP/logogreen.png" alt="לוגו Green API" class="service-logo">
+                <h3>פתרונות Green API</h3>
+                <p>כנציג רשמי של Green API, אני מספק פתרונות חיבור מתקדמים לווצאפ, המאפשרים שליחה וקבלה של הודעות
+                    באמצעות ממשק API יעיל.</p>
+            </div>
+        </section>
+
+        <section class="testimonial-carousel fadeInUp" style="animation-delay: 0.6s;">
+            <div class="testimonial-container">
+                <!-- העדויות יתווספו כאן דינמית על ידי JavaScript -->
+            </div>
+            <button class="carousel-btn prev">&gt;</button>
+            <button class="carousel-btn next">&lt;</button>
+        </section>
+
+        <section class="cta fadeInUp" style="animation-delay: 0.8s;">
+            <h2>הוכרת תודה</h2>
+            <p>אם גם אתם מצאתם את עצמכם לא פעם נהנים מהעזרה והייעוץ שלי או מהפיתוחים שעשיתי לטובת הקהילה, אתם מוזמנים
+                להכיר תודה בכפתור הזה כאן. הוכרת התודה שלכם תניע אותי להמשיך את פעילותי למען הקהילה.</p>
+            <a href="#" class="btn pulse" id="supportBtn">להוכרת תודה לחצו כאן</a>
+        </section>
+
+        <section class="feedback-form fadeInUp" style="animation-delay: 1s;">
+            <h2>השאירו פידבק</h2>
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="name">שם:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">מספר טלפון:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="feedback">הפידבק שלכם:</label>
+                    <textarea id="feedback" name="feedback" required></textarea>
+                </div>
+                <div class="form-submit">
+                    <button type="submit" class="btn">שלח פידבק</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="social-links fadeInUp" style="animation-delay: 1.2s;">
+            <a href="#" id="facebookLink" title="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" id="whatsappShare" title="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Shay Digital Services</p>
+    </footer>
+
+    <div class="floating-btn">
+        <a href="#" class="btn pulse" id="floatingSupportBtn">☕</a>
+    </div>
+
+    <script>
+        // Support button functionality
+document.getElementById('supportBtn').addEventListener('click', function(e) {
+    e.preventDefault(); 
+    window.open('https://payboxapp.page.link/i2SHpW8eaVouHeLo8', '_blank');
+});
+
+// Floating support button functionality
+const floatingBtn = document.getElementById('floatingSupportBtn');
+const mainSupportBtn = document.getElementById('supportBtn');
+
+floatingBtn.addEventListener('click', function(e) {
+    e.preventDefault(); 
+    window.open('https://payboxapp.page.link/i2SHpW8eaVouHeLo8', '_blank');
+});
+
+window.addEventListener('scroll', function() {
+    const mainBtnRect = mainSupportBtn.getBoundingClientRect();
+    if (mainBtnRect.top <= window.innerHeight && mainBtnRect.bottom >= 0) {
+        floatingBtn.style.opacity = '0';
+        floatingBtn.style.pointerEvents = 'none';
+    } else {
+        floatingBtn.style.opacity = '1';
+        floatingBtn.style.pointerEvents = 'auto';
+    }
+});
+
+// קרוסלת פידבקים
+        const testimonialsData = [
+            {
+                text: "שי הוא מקצוען אמיתי. הפתרונות שלו חסכו לנו שעות רבות של עבודה ידנית.",
+                author: "דני כהן, מנכ\"ל חברת טכנולוגיה",
+                profilePic: "https://i.pravatar.cc/150?img=1"
+            },
+            {
+                text: "ההבנה של שי בתחום האוטומציה היא ברמה הגבוהה ביותר. ממליצה בחום!",
+                author: "רונית לוי, יועצת עסקית",
+                profilePic: "https://i.pravatar.cc/150?img=2"
+            },
+            {
+                text: "תודה לשי על הפתרונות היצירתיים. הוא באמת מבין את הצרכים של העסק.",
+                author: "אבי ישראלי, בעל עסק קטן",
+                profilePic: "https://i.pravatar.cc/150?img=3"
+            }
+        ];
+
+        let currentTestimonial = 0;
+        const testimonialContainer = document.querySelector('.testimonial-container');
+
+        function createTestimonialElement(testimonial) {
+            const element = document.createElement('div');
+            element.className = 'testimonial';
+            element.innerHTML = `
+                <p class="testimonial-text">${testimonial.text}</p>
+                <img src="${testimonial.profilePic}" alt="תמונת פרופיל של ${testimonial.author.split(',')[0]}" class="profile-pic">
+                <p class="testimonial-author">${testimonial.author}</p>
+            `;
+            return element;
+        }
+
+        function initializeTestimonials() {
+            testimonialsData.forEach(testimonial => {
+                testimonialContainer.appendChild(createTestimonialElement(testimonial));
+            });
+            showTestimonial(0);
+        }
+
+        function showTestimonial(index) {
+            const testimonials = document.querySelectorAll('.testimonial');
+            testimonials.forEach((testimonial, i) => {
+                testimonial.classList.toggle('active', i === index);
+            });
+            testimonialContainer.style.transform = `translateX(${index * 100}%)`;
+        }
+
+        function changeTestimonial(direction) {
+            currentTestimonial = (currentTestimonial + direction + testimonialsData.length) % testimonialsData.length;
+            showTestimonial(currentTestimonial);
+        }
+
+        initializeTestimonials();
+
+        let intervalId = setInterval(() => changeTestimonial(1), 5000);
+
+        const prevBtn = document.querySelector('.carousel-btn.prev');
+        const nextBtn = document.querySelector('.carousel-btn.next');
+
+        prevBtn.addEventListener('click', () => {
+            clearInterval(intervalId);
+            changeTestimonial(-1);
+            intervalId = setInterval(() => changeTestimonial(1), 5000);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            clearInterval(intervalId);
+            changeTestimonial(1);
+            intervalId = setInterval(() => changeTestimonial(1), 5000);
+        });
+
+// Social media links
+document.getElementById('facebookLink').addEventListener('click', function(e) {
+    e.preventDefault();  
+    window.open('https://www.facebook.com/ShayDigitalServices', '_blank');
+});
+
+document.getElementById('whatsappShare').addEventListener('click', function(e) {
+    e.preventDefault();
+    const shareText = 'תומכים בחדשנות עם שי דיגיטל סרביסס: ' + window.location.href;
+    const whatsappUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText);
+    window.open(whatsappUrl, '_blank');
+});
+
+// Feedback form submission
+document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const feedback = document.getElementById('feedback').value;
+    
+    const formData = {
+        name: name,
+        phone: phone,
+        feedback: feedback
+    };
+    
+    fetch('https://hook.integrator.boost.space/zd1hat1kl46d46kf03fgqs2a3jarx8wq', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (response.ok) {
+            this.reset();
+            alert('תודה על הפידבק שלך!');
+        } else {
+            throw new Error('בעיה בשליחת הטופס');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('אירעה שגיאה בשליחת הטופס. נא נסה שוב מאוחר יותר.');
+    });
+});
+    </script>
+</body>
+
+</html>
