@@ -182,6 +182,7 @@
         .social-links h3 {
             text-align: center;
             margin-bottom: 15px;
+            font-size: 1.2em;
         }
 
         .social-buttons {
@@ -197,10 +198,15 @@
             text-decoration: none;
             color: var(--primary-color);
         }
+        
+		.social-buttons a i {
+   			font-size: 1.5em; /* הקטנת גודל האייקון */
+		}
 
         .social-buttons a span {
             margin-top: 5px;
-            font-size: 0.8em;
+            font-size: 0.7em;
+            white-space: nowrap; /* מונע שבירת שורה */
         }
 
         .social-links a {
@@ -373,6 +379,17 @@
                 bottom: 10px;
                 right: 10px;
             }
+    .social-buttons {
+        gap: 15px; /* הקטנת המרווח בין הכפתורים */
+    }
+
+    .social-buttons a i {
+        font-size: 1.3em; /* הקטנה נוספת של האייקון במובייל */
+    }
+
+    .social-buttons a span {
+        font-size: 0.6em; /* הקטנה נוספת של הטקסט במובייל */
+    }
         }
 
         /* Animations */
