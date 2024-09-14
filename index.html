@@ -252,7 +252,7 @@
         .testimonial-carousel {
             background-color: var(--white);
             border-radius: 15px;
-            padding: 40px;
+            padding: 40px 50px;
             margin-bottom: 50px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -266,9 +266,17 @@
         }
 
         .testimonial {
-            flex: 0 0 100%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        flex: 0 0 100%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        //display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        justify-content: space-between;
+        height: 170px; /* או כל גובה אחר שמתאים לפרגון הארוך ביותר */
+        padding: 20px;
+        box-sizing: border-box;
         }
 
         .testimonial.active {
@@ -278,10 +286,18 @@
         .testimonial-text {
             font-style: italic;
             margin-bottom: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
         }
 
         .testimonial-author {
-            font-weight: bold;
+        font-weight: bold;
+        }
+        
+        .testimonial-author-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         }
 
         .carousel-btn {
@@ -297,6 +313,7 @@
             font-size: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
+            z-index: 10;
         }
 
         .carousel-btn:hover {
@@ -304,11 +321,11 @@
         }
 
         .carousel-btn.prev {
-            left: 10px;
+            left: 5px;
         }
 
         .carousel-btn.next {
-            right: 10px;
+            right: 5px;
         }
 
         /* Feedback Form */
@@ -357,8 +374,41 @@
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
+
+            .testimonial-carousel {
+            padding: 20px 40px; /* מרווח קטן יותר בצדדים במובייל */
+            }
+            
+            .testimonial {
+            height: 350px; /* גובה גדול יותר במובייל */
+            width: calc(100% - 60px); /* רוחב צר יותר במובייל */
+            margin: 0 auto; /* מרכוז */
+            }
+            
+            .carousel-btn {
+            top: 50%; /* החזרת הכפתורים לצדדים */
+            bottom: auto;
+            transform: translateY(-50%);
+            }
+            
+            .carousel-btn.prev {
+            left: 5px; /* עדכון מיקום */
+            transform: translateY(-50%); /* מחיקת ההזזה האופקית */
+            }
+            
+            .carousel-btn.next {
+            right: 5px; /* עדכון מיקום */
+            transform: translateY(-50%); /* מחיקת ההזזה האופקית */
+            }
+            
+            .carousel-btn {
+            width: 30px; /* כפתורים קטנים יותר במובייל */
+            height: 30px;
+            font-size: 16px;
+            }
+
             .service {
-                flex-basis: 100%;
+            flex-basis: 100%;
             }
 
             h1 {
@@ -370,8 +420,7 @@
             }
 
             .cta,
-            .feedback-form,
-            .testimonial-carousel {
+            .feedback-form {
                 padding: 30px;
             }
 
@@ -410,9 +459,8 @@
         }
 
         .profile-pic {
-            width: 30px;
-            /* או ערך אחר לפי גודל התמונה הרצוי */
-            height: 30px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             margin-right: 10px;
         }
@@ -574,8 +622,10 @@ const testimonialsData = [
             element.className = 'testimonial';
             element.innerHTML = `
                 <p class="testimonial-text">${testimonial.text}</p>
+                <div class="testimonial-author-container">
                 <img src="${testimonial.profilePic}" alt="תמונת פרופיל של ${testimonial.author.split(',')[0]}" class="profile-pic">
                 <p class="testimonial-author">${testimonial.author}</p>
+                </div>
             `;
             return element;
         }
