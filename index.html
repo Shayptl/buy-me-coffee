@@ -659,13 +659,13 @@ const testimonialsData = [
 
         prevBtn.addEventListener('click', () => {
             clearInterval(intervalId);
-            changeTestimonial(-1);
+            changeTestimonial(1);
             intervalId = setInterval(() => changeTestimonial(1), 5000);
         });
 
         nextBtn.addEventListener('click', () => {
             clearInterval(intervalId);
-            changeTestimonial(1);
+            changeTestimonial(-1);
             intervalId = setInterval(() => changeTestimonial(1), 5000);
         });
 
