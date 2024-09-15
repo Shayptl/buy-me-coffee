@@ -82,20 +82,37 @@
             margin-bottom: 30px;
         }
 
-        .intro {
-            background-color: var(--white);
-            border-radius: 15px;
-            padding: 40px;
-            margin: -50px auto 50px;
-            max-width: 800px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
+.intro {
+    background-color: var(--white);
+    border-radius: 15px;
+    padding: 40px;
+    margin-top: -50px;
+    margin-bottom: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
 
         .services {
             display: flex;
-            justify-content: space-between;
             flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            width: 100%;
+        }
+
+        .services-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
             margin-bottom: 50px;
+        }
+
+        .services-container h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: bold;
         }
 
         .service {
@@ -142,14 +159,20 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
-        .cta {
-            text-align: center;
-            margin-bottom: 70px;
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-            padding: 60px;
-            border-radius: 15px;
-            color: var(--white);
-        }
+.cta {
+    text-align: center;
+    margin-bottom: 70px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    padding: 60px;
+    border-radius: 15px;
+    color: var(--white);
+}
+
+.intro, .cta {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
         .cta p {
             margin-bottom: 30px;
@@ -380,36 +403,36 @@
 
         .form-group input,
         .form-group textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-family: 'Heebo', sans-serif;
-        font-size: 16px;
-        color: var(--text-color);
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 16px;
+            color: var(--text-color);
         }
 
         .form-group input::placeholder,
         .form-group textarea::placeholder {
-        color: #999;
-        opacity: 1;
-        font-family: 'Heebo', sans-serif;
+            color: #999;
+            opacity: 1;
+            font-family: 'Heebo', sans-serif;
         }
-        
+
         .form-group input:focus::placeholder,
         .form-group textarea:focus::placeholder {
-        opacity: 0.5;
+            opacity: 0.5;
         }
-        
+
         .form-group input:focus,
         .form-group textarea:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
         }
 
         .form-submit {
-        text-align: center;
+            text-align: center;
         }
 
         /* Floating Donation Button */
@@ -423,6 +446,10 @@
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
+
+    .intro, .cta {
+        padding: 30px;
+    }
 
             .testimonial-carousel {
                 padding: 20px 40px;
@@ -525,8 +552,8 @@
     <header>
         <div class="container">
             <img src="https://i.ibb.co/BBxdNs3/Green.png" alt="Shay Digital Services Logo" class="logo fadeInUp">
-            <h1 class="fadeInUp">Shay digital services</h1>
-            <p class="subtitle fadeInUp">פתרונות אוטומציה מתקדמים לעסקים</p>
+            <h1 class="fadeInUp">מפרגנים לשי! ☕</h1>
+            <p class="subtitle fadeInUp">על תמיכה ועזרה לקהילת מפתחי האוטומציה בישראל</p>
         </div>
     </header>
 
@@ -534,24 +561,17 @@
         <section class="intro fadeInUp">
             <h2>היי חברים, זה שי</h2>
             <p>כמפתח אוטומציות מוביל ונציג של Green API בישראל, אני מקדיש את זמני לפיתוח פתרונות חדשניים ומתן מענה ועזרה
-                לקהילת מפתחי
-                האוטומציות בישראל. הידע והניסיון שלי עומדים לרשותכם.</p>
+                לקהילת מפתחי האוטומציות בישראל. אם נעזרתם בי, למדתם ממני או סתם נהניתם מהתרומה שלי לקהילה, אשמח אם
+                תפרגנו לי בקפה וירטואלי!</p>
         </section>
 
-        <section class="services">
-            <div class="service fadeInUp" style="animation-delay: 0.2s;">
-                <img src="https://i.ibb.co/K0JscxC/logo-make.png" alt="לוגו של Make.com Integromat" class="service-logo">
-                <h3>אוטומציות לעסקים</h3>
-                <p>מתן סיוע ועזרה בשימוש ביצירת פתרונות אוטומציה מתקדמים באמצעות Make (לשעבר Integromat) לייעול התהליכים
-                    שלכם ושל הלקוחות שלכם.</p>
-            </div>
-            <div class="service fadeInUp" style="animation-delay: 0.4s;">
-                <img src="https://i.ibb.co/2tgQ0MP/logogreen.png" alt="לוגו Green API" class="service-logo">
-                <h3>פתרונות Green API</h3>
-                <p>כנציג רשמי של Green API בישראל אני מספק מתן מענה ופתרונות שמסייעים בחיבורים מתקדמים לווצאפ, המאפשרים
-                    לכם וללקוחות שלכם שליחה וקבלה של הודעות
-                    באמצעות המערכת שלנו.</p>
-            </div>
+        <section class="cta fadeInUp" style="animation-delay: 0.8s;">
+            <h2>איך מפרגנים?</h2>
+            <p>הנה שלוש דרכים לפרגן לי חזרה:
+                </br>1. קנו לי קפה וירטואלי - זה נותן אנרגיה להמשיך לפתח ולתרום!
+                </br>2. שתפו חוויה שתיכנס לכאן - ספרו איך עזרתי לכם, זה תמיד משמח לשמוע.
+                </br>3. אם אתם מסוג האנשים הכי טובים - תעשו את שניהם!</p>
+            <a href="#" class="btn pulse" id="supportBtn">פרגנו בקפה!</a>
         </section>
 
         <section class="testimonial-carousel fadeInUp" style="animation-delay: 0.6s;">
@@ -567,14 +587,27 @@
             <button class="carousel-btn next">&lt;</button>
         </section>
 
-        <section class="cta fadeInUp" style="animation-delay: 0.8s;">
-            <h2>הכרת תודה</h2>
-            <p>חברים יקרים, אם נעזרתם בי, למדתם ממני או סתם נהניתם מהתרומה שלי לקהילה, הנה כמה דרכים לפרגן לי חזרה:
-                </br>1. קנו לי קפה וירטואלי - זה נותן אנרגיה להמשיך לפתח ולתרום!
-                </br>2. שתפו חוויה שתיכנס לכאן - ספרו איך עזרתי לכם, זה תמיד משמח לשמוע.
-                </br>3. אם אתם מסוג האנשים הכי טובים - תעשו את שניהם!</p>
-            <a href="#" class="btn pulse" id="supportBtn">אז.. איזה קפה אתם הכי אוהבים?</a>
-        </section>
+        <div class="services-container">
+            <h2>במה אני עוזר לקהילה?</h2>
+            <section class="services">
+                <div class="service fadeInUp" style="animation-delay: 0.2s;">
+                    <img src="https://i.ibb.co/K0JscxC/logo-make.png" alt="לוגו של Make.com Integromat" class="service-logo">
+                    <h3>אוטומציות לעסקים</h3>
+                    <p>מתן סיוע ועזרה בשימוש ביצירת פתרונות אוטומציה מתקדמים באמצעות Make (לשעבר Integromat) לייעול
+                        התהליכים
+                        שלכם ושל הלקוחות שלכם.</p>
+                </div>
+                <div class="service fadeInUp" style="animation-delay: 0.4s;">
+                    <img src="https://i.ibb.co/2tgQ0MP/logogreen.png" alt="לוגו Green API" class="service-logo">
+                    <h3>פתרונות Green API</h3>
+                    <p>כנציג רשמי של Green API בישראל אני מספק מתן מענה ופתרונות שמסייעים בחיבורים מתקדמים לווצאפ,
+                        המאפשרים
+                        לכם וללקוחות שלכם שליחה וקבלה של הודעות
+                        באמצעות המערכת שלנו.</p>
+                </div>
+            </section>
+        </div>
+
 
         <section class="feedback-form fadeInUp" style="animation-delay: 1s;">
             <h2>פינת המפרגנים באהבה 😇</h2>
