@@ -619,10 +619,12 @@ let intervalId;
 function createTestimonialElement(testimonial) {
     const element = document.createElement('div');
     element.className = 'testimonial';
+    const defaultProfilePic = 'https://i.ibb.co/ByssB3y/image.png';
+    const profilePicSrc = testimonial.profilePic || defaultProfilePic;
     element.innerHTML = `
         <p class="testimonial-text">${testimonial.text}</p>
         <div class="testimonial-author-container">
-            <img src="${testimonial.profilePic}" alt="תמונת פרופיל של ${testimonial.author.split(',')[0]}" class="profile-pic">
+            <img src="${profilePicSrc}" alt="תמונת פרופיל של ${testimonial.author.split(',')[0]}" class="profile-pic">
             <p class="testimonial-author">${testimonial.author}, ${testimonial.description}</p>
         </div>
     `;
@@ -676,13 +678,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     prevBtn.addEventListener('click', () => {
         clearInterval(intervalId);
-        changeTestimonial(-1);
+        changeTestimonial(1);
         intervalId = setInterval(() => changeTestimonial(1), 5000);
     });
 
     nextBtn.addEventListener('click', () => {
         clearInterval(intervalId);
-        changeTestimonial(1);
+        changeTestimonial(-1);
         intervalId = setInterval(() => changeTestimonial(-1), 5000);
     });
 });
