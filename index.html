@@ -197,15 +197,17 @@
             text-decoration: none;
             color: var(--primary-color);
         }
-        
-		.social-buttons a i {
-   			font-size: 1.5em; /* הקטנת גודל האייקון */
-		}
+
+        .social-buttons a i {
+            font-size: 1.5em;
+            /* הקטנת גודל האייקון */
+        }
 
         .social-buttons a span {
             margin-top: 5px;
             font-size: 0.7em;
-            white-space: nowrap; /* מונע שבירת שורה */
+            white-space: nowrap;
+            /* מונע שבירת שורה */
         }
 
         .social-links a {
@@ -247,6 +249,32 @@
             animation: pulse 2s infinite;
         }
 
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--background-color);
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
         /* Testimonial Carousel */
         .testimonial-carousel {
             background-color: var(--white);
@@ -265,17 +293,17 @@
         }
 
         .testimonial {
-        flex: 0 0 100%;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        //display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        justify-content: space-between;
-        height: 170px;
-        padding: 20px;
-        box-sizing: border-box;
+            flex: 0 0 100%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            //display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: space-between;
+            height: 170px;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .testimonial.active {
@@ -290,13 +318,13 @@
         }
 
         .testimonial-author {
-        font-weight: bold;
+            font-weight: bold;
         }
-        
+
         .testimonial-author-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .carousel-btn {
@@ -375,39 +403,43 @@
         @media (max-width: 768px) {
 
             .testimonial-carousel {
-            padding: 20px 40px; /* מרווח קטן יותר בצדדים במובייל */
+                padding: 20px 40px;
+                /* מרווח קטן יותר בצדדים במובייל */
             }
-            
+
             .testimonial {
-            height: 350px; /* גובה גדול יותר במובייל */
-            width: calc(100% - 60px); /* רוחב צר יותר במובייל */
-            margin: 0 auto; /* מרכוז */
+                height: 350px;
+                /* גובה גדול יותר במובייל */
+                width: calc(100% - 60px);
+                /* רוחב צר יותר במובייל */
+                margin: 0 auto;
+                /* מרכוז */
             }
-            
+
             .carousel-btn {
-            top: 50%;
-            bottom: auto;
-            transform: translateY(-50%);
+                top: 50%;
+                bottom: auto;
+                transform: translateY(-50%);
             }
-            
+
             .carousel-btn.prev {
-            left: 5px;
-            transform: translateY(-50%);
+                left: 5px;
+                transform: translateY(-50%);
             }
-            
+
             .carousel-btn.next {
-            right: 5px;
-            transform: translateY(-50%);
+                right: 5px;
+                transform: translateY(-50%);
             }
-            
+
             .carousel-btn {
-            width: 30px;
-            height: 30px;
-            font-size: 16px;
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
             }
 
             .service {
-            flex-basis: 100%;
+                flex-basis: 100%;
             }
 
             h1 {
@@ -427,17 +459,18 @@
                 bottom: 13px;
                 right: 10px;
             }
-    .social-buttons {
-        gap: 15px;
-    }
 
-    .social-buttons a i {
-        font-size: 1.3em;
-    }
+            .social-buttons {
+                gap: 15px;
+            }
 
-    .social-buttons a span {
-        font-size: 0.6em;
-    }
+            .social-buttons a i {
+                font-size: 1.3em;
+            }
+
+            .social-buttons a span {
+                font-size: 0.6em;
+            }
         }
 
         /* Animations */
@@ -502,7 +535,10 @@
         <section class="testimonial-carousel fadeInUp" style="animation-delay: 0.6s;">
             <h3>הפרגונים שלכם</h3>
             </br>
-            <div class="testimonial-container">
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+            </div>
+            <div class="testimonial-container" style="display: none;">
                 <!-- העדויות יתווספו כאן דינמית על ידי JavaScript -->
             </div>
             <button class="carousel-btn prev">&gt;</button>
@@ -522,7 +558,7 @@
             <h2>פינת המפרגנים באהבה 😇</h2>
             <form id="feedbackForm">
                 <div class="form-group">
-                    <label for="name">שם מלא:</label>
+                    <label for="name">שם:</label>
                     <input type="text" id="name" name="name" required>
                 </div>
                 <div class="form-group">
@@ -633,7 +669,9 @@ function createTestimonialElement(testimonial) {
 
 async function initializeTestimonials() {
     testimonialContainer = document.querySelector('.testimonial-container');
+    const loadingContainer = document.querySelector('.loading-container');
     let testimonials;
+    
     try {
         testimonials = await fetchTestimonials();
     } catch (error) {
@@ -649,6 +687,10 @@ async function initializeTestimonials() {
     testimonials.forEach(testimonial => {
         testimonialContainer.appendChild(createTestimonialElement(testimonial));
     });
+    
+    // Hide loading spinner and show testimonials
+    loadingContainer.style.display = 'none';
+    testimonialContainer.style.display = 'flex';
     
     showTestimonial(0);
     
