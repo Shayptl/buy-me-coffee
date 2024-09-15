@@ -82,14 +82,14 @@
             margin-bottom: 30px;
         }
 
-.intro {
-    background-color: var(--white);
-    border-radius: 15px;
-    padding: 40px;
-    margin-top: -50px;
-    margin-bottom: 50px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
+        .intro {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: -50px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
 
         .services {
             display: flex;
@@ -159,20 +159,21 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
-.cta {
-    text-align: center;
-    margin-bottom: 70px;
-    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-    padding: 60px;
-    border-radius: 15px;
-    color: var(--white);
-}
+        .cta {
+            text-align: center;
+            margin-bottom: 70px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            padding: 60px;
+            border-radius: 15px;
+            color: var(--white);
+        }
 
-.intro, .cta {
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
+        .intro,
+        .cta {
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
         .cta p {
             margin-bottom: 30px;
@@ -447,9 +448,10 @@
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
 
-    .intro, .cta {
-        padding: 30px;
-    }
+            .intro,
+            .cta {
+                padding: 30px;
+            }
 
             .testimonial-carousel {
                 padding: 20px 40px;
@@ -553,7 +555,7 @@
         <div class="container">
             <img src="https://i.ibb.co/BBxdNs3/Green.png" alt="Shay Digital Services Logo" class="logo fadeInUp">
             <h1 class="fadeInUp">מפרגנים לשי! ☕</h1>
-            <p class="subtitle fadeInUp">על תמיכה ועזרה לקהילת מפתחי האוטומציה בישראל</p>
+            <p class="subtitle fadeInUp">קיבלת שירות ממני? עזרתי לך לפתור איזשהו בעיה? מכאן ניתן לפרגן באהבה</p>
         </div>
     </header>
 
@@ -572,6 +574,32 @@
                 </br>2. שתפו חוויה שתיכנס לכאן - ספרו איך עזרתי לכם, זה תמיד משמח לשמוע.
                 </br>3. אם אתם מסוג האנשים הכי טובים - תעשו את שניהם!</p>
             <a href="#" class="btn pulse" id="supportBtn">פרגנו בקפה!</a>
+        </section>
+
+
+        <section class="feedback-form fadeInUp" style="animation-delay: 1s;">
+            <h2>פינת המפרגנים באהבה 😇</h2>
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="name">שם:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">מספר טלפון:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="profession">תיאור המקצוע שלך:</label>
+                    <input type="text" id="profession" name="profession" placeholder="למשל: מפתח אוטומציות" required>
+                </div>
+                <div class="form-group">
+                    <label for="feedback">הפרגון שלכם כאן:</label>
+                    <textarea id="feedback" name="feedback" required></textarea>
+                </div>
+                <div class="form-submit">
+                    <button type="submit" class="btn">שליחת הפירגון</button>
+                </div>
+            </form>
         </section>
 
         <section class="testimonial-carousel fadeInUp" style="animation-delay: 0.6s;">
@@ -607,32 +635,6 @@
                 </div>
             </section>
         </div>
-
-
-        <section class="feedback-form fadeInUp" style="animation-delay: 1s;">
-            <h2>פינת המפרגנים באהבה 😇</h2>
-            <form id="feedbackForm">
-                <div class="form-group">
-                    <label for="name">שם:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">מספר טלפון:</label>
-                    <input type="tel" id="phone" name="phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="profession">תיאור המקצוע שלך:</label>
-                    <input type="text" id="profession" name="profession" placeholder="למשל: מפתח אוטומציות" required>
-                </div>
-                <div class="form-group">
-                    <label for="feedback">הפרגון שלכם כאן:</label>
-                    <textarea id="feedback" name="feedback" required></textarea>
-                </div>
-                <div class="form-submit">
-                    <button type="submit" class="btn">שליחת הפירגון</button>
-                </div>
-            </form>
-        </section>
 
         <section class="social-links fadeInUp" style="animation-delay: 1.2s;">
             <h3>למעקב ושיתוף:</h3>
