@@ -590,83 +590,103 @@ window.addEventListener('scroll', function() {
 });
 
 // קרוסלת פידבקים
-const testimonialsData = [
-    {
-        text: "שי גאון הפיצוחים. כשיש לי בעיה קשה שאני לא מצליחה לפתור לבד, שי פותר אותה! שי יסודי מאוד, ולא מוותר עד שהוא פותר בעיות טכנולוגיות גם כשאני כבר מתייאשת. בן אדם ישר, ועם לב טוב. מפרגנת!",
-        author: "יסכה קסוביץ', מפתחת אוטומציות",
-        profilePic: "https://i.ibb.co/GpqV7zr/image.jpg"
-    },
-    {
-        text: "שי הוא אשף האוטומציה האמיתי. הידע שלו ב-Make ו-Green API פשוט מדהים. תמיד מוכן לחלוק טיפים ופתרונות יצירתיים.",
-        author: "רועי גולן, מפתח אוטומציות",
-        profilePic: "https://i.pravatar.cc/150?img=12"
-    },
-    {
-        text: "ההסברים של שי על אינטגרציות מורכבות הם ברורים ומעמיקים. הוא באמת מקור ידע בלתי נדלה בקהילה שלנו.",
-        author: "מיכל לוי, מומחית אינטגרציות",
-        profilePic: "https://i.pravatar.cc/150?img=1"
-    },
-    {
-        text: "תודה לשי על העזרה עם ה-API של Green. חסכת לי שעות של דיבוג ומחקר. אתה תותח!",
-        author: "אלון כהן, מפתח תוכנה",
-        profilePic: "https://i.pravatar.cc/150?img=14"
+
+// קריאת נתונים מאיירטייבל
+const AIRTABLE_API_KEY = 'pat2eCzPcOwr939Wf.c265e6ae030c17eb20fab79b05e224d2ee3baad18599ee00bf26569ebe4890b3';
+const AIRTABLE_BASE_ID = 'appdBshFfoZSBMfOy';
+const AIRTABLE_TABLE_NAME = 'tblkw7GoX7NZ3h0aO';
+
+async function fetchTestimonials() {
+    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`;
+    const response = await fetch(url, {
+        headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` }
+    });
+    const data = await response.json();
+    return data.records
+        .filter(record => record.fields.פירגון) // מסנן רשומות ריקות
+        .map(record => ({
+            text: record.fields.פירגון,
+            author: record.fields.שם,
+            description: record.fields.תיאור,
+            profilePic: record.fields.img
+        }));
+}
+
+let currentTestimonial = 0;
+let testimonialContainer;
+let intervalId;
+
+function createTestimonialElement(testimonial) {
+    const element = document.createElement('div');
+    element.className = 'testimonial';
+    element.innerHTML = `
+        <p class="testimonial-text">${testimonial.text}</p>
+        <div class="testimonial-author-container">
+            <img src="${testimonial.profilePic}" alt="תמונת פרופיל של ${testimonial.author.split(',')[0]}" class="profile-pic">
+            <p class="testimonial-author">${testimonial.author}, ${testimonial.description}</p>
+        </div>
+    `;
+    return element;
+}
+
+async function initializeTestimonials() {
+    testimonialContainer = document.querySelector('.testimonial-container');
+    let testimonials;
+    try {
+        testimonials = await fetchTestimonials();
+    } catch (error) {
+        console.error('Error fetching testimonials:', error);
+        testimonials = []; // Use an empty array if fetch fails
     }
-];
+    
+    if (testimonials.length === 0) {
+        // אם אין נתונים מאיירטייבל, השתמש בנתונים הסטטיים
+        testimonials = testimonialsData;
+    }
+    
+    testimonials.forEach(testimonial => {
+        testimonialContainer.appendChild(createTestimonialElement(testimonial));
+    });
+    
+    showTestimonial(0);
+    
+    // התחלת הקרוסלה האוטומטית
+    intervalId = setInterval(() => changeTestimonial(1), 5000);
+}
 
-        let currentTestimonial = 0;
-        const testimonialContainer = document.querySelector('.testimonial-container');
+function showTestimonial(index) {
+    const testimonials = document.querySelectorAll('.testimonial');
+    testimonials.forEach((testimonial, i) => {
+        testimonial.classList.toggle('active', i === index);
+    });
+    testimonialContainer.style.transform = `translateX(${index * 100}%)`;
+}
 
-        function createTestimonialElement(testimonial) {
-            const element = document.createElement('div');
-            element.className = 'testimonial';
-            element.innerHTML = `
-                <p class="testimonial-text">${testimonial.text}</p>
-                <div class="testimonial-author-container">
-                <img src="${testimonial.profilePic}" alt="תמונת פרופיל של ${testimonial.author.split(',')[0]}" class="profile-pic">
-                <p class="testimonial-author">${testimonial.author}</p>
-                </div>
-            `;
-            return element;
-        }
+function changeTestimonial(direction) {
+    const testimonials = document.querySelectorAll('.testimonial');
+    currentTestimonial = (currentTestimonial + direction + testimonials.length) % testimonials.length;
+    showTestimonial(currentTestimonial);
+}
 
-        function initializeTestimonials() {
-            testimonialsData.forEach(testimonial => {
-                testimonialContainer.appendChild(createTestimonialElement(testimonial));
-            });
-            showTestimonial(0);
-        }
+document.addEventListener('DOMContentLoaded', () => {
+    initializeTestimonials();
+    
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
 
-        function showTestimonial(index) {
-            const testimonials = document.querySelectorAll('.testimonial');
-            testimonials.forEach((testimonial, i) => {
-                testimonial.classList.toggle('active', i === index);
-            });
-            testimonialContainer.style.transform = `translateX(${index * 100}%)`;
-        }
+    prevBtn.addEventListener('click', () => {
+        clearInterval(intervalId);
+        changeTestimonial(-1);
+        intervalId = setInterval(() => changeTestimonial(1), 5000);
+    });
 
-        function changeTestimonial(direction) {
-            currentTestimonial = (currentTestimonial + direction + testimonialsData.length) % testimonialsData.length;
-            showTestimonial(currentTestimonial);
-        }
+    nextBtn.addEventListener('click', () => {
+        clearInterval(intervalId);
+        changeTestimonial(1);
+        intervalId = setInterval(() => changeTestimonial(-1), 5000);
+    });
+});
 
-        initializeTestimonials();
-
-        let intervalId = setInterval(() => changeTestimonial(1), 5000);
-
-        const prevBtn = document.querySelector('.carousel-btn.prev');
-        const nextBtn = document.querySelector('.carousel-btn.next');
-
-        prevBtn.addEventListener('click', () => {
-            clearInterval(intervalId);
-            changeTestimonial(1);
-            intervalId = setInterval(() => changeTestimonial(1), 5000);
-        });
-
-        nextBtn.addEventListener('click', () => {
-            clearInterval(intervalId);
-            changeTestimonial(-1);
-            intervalId = setInterval(() => changeTestimonial(1), 5000);
-        });
 
 // Social media links
 document.getElementById('facebookLink').addEventListener('click', function(e) {
