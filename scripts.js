@@ -1,276 +1,178 @@
-// URL of your Google Apps Script web app
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-nLADcYlSnnW5MgmpTY_gJYceiqhHJsQYYo3wH43a6pdEU1G6XZnU0HtZ1n3397Wf6A/exec';
+// Support button functionality
+document.getElementById('supportBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+    window.open('https://payboxapp.page.link/i2SHpW8eaVouHeLo8', '_blank');
+});
 
-let newsItems = [];
-let currentIndex = 0;
+// Floating support button functionality
+const floatingBtn = document.getElementById('floatingSupportBtn');
+const mainSupportBtn = document.getElementById('supportBtn');
 
-async function fetchNewsItems() {
-    try {
-        const response = await fetch(SCRIPT_URL);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log('Fetched data:', data);
-        if (Array.isArray(data)) {
-            newsItems = data;
-        } else {
-            console.error('Fetched data is not an array:', data);
-            newsItems = [];
-        }
-        populateExpertiseOptions();
-    } catch (error) {
-        console.error("Could not fetch news items:", error);
-        newsItems = [];
-    }
-}
+floatingBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    window.open('https://payboxapp.page.link/i2SHpW8eaVouHeLo8', '_blank');
+});
 
-function populateExpertiseOptions() {
-    const expertiseSelect = document.getElementById('expertise');
-    if (!expertiseSelect) {
-        console.error('Expertise select element not found');
-        return;
-    }
-    expertiseSelect.innerHTML = '<option value="">בחר תחום מומחיות</option>';
-    const systems = new Set(newsItems.map(item => item.system.name));
-    
-    systems.forEach(system => {
-        if (system) {
-            const option = document.createElement('option');
-            option.value = system;
-            option.textContent = system;
-            expertiseSelect.appendChild(option);
-        }
-    });
-    
-    const otherOption = document.createElement('option');
-    otherOption.value = 'other';
-    otherOption.textContent = 'אחר';
-    expertiseSelect.appendChild(otherOption);
-}
-
-function formatDate(dateString) {
-    if (!dateString) return '';
-    const [date, time] = dateString.split(' ');
-    const [day, month, year] = date.split('/');
-    return `${day}.${month}.${year}`;
-}
-
-function calculateItemsPerRow() {
-    const newsGrid = document.getElementById('newsGrid');
-    if (!newsGrid) {
-        console.error('News grid element not found');
-        return 1;
-    }
-    const newsItemWidth = 250;
-    return Math.floor(newsGrid.offsetWidth / newsItemWidth);
-}
-
-function loadNewsItems() {
-    const newsGrid = document.getElementById('newsGrid');
-    if (!newsGrid) {
-        console.error('News grid element not found');
-        return;
-    }
-    const itemsPerRow = calculateItemsPerRow();
-    const itemsToLoad = itemsPerRow * 2;
-    const endIndex = Math.min(currentIndex + itemsToLoad, newsItems.length);
-    
-    for (let i = currentIndex; i < endIndex; i++) {
-        const item = newsItems[i];
-        const newsItemElement = document.createElement('div');
-        newsItemElement.className = 'news-item';
-        
-        let formattedContent = item.content.replace(/\n/g, '<br>');
-        let hasImage = formattedContent.includes('<img');
-        let shouldTruncate = formattedContent.length > 100 || hasImage;
-        let displayContent;
-
-        if (hasImage) {
-            let textBeforeImage = formattedContent.split('<img')[0];
-            displayContent = textBeforeImage.length > 100 ? textBeforeImage.substring(0, 100) + '...' : textBeforeImage;
-        } else {
-            displayContent = shouldTruncate 
-                ? formattedContent.substring(0, 100).replace(/<br>$/, '').trim() + '...'
-                : formattedContent;
-        }
-
-        let readMoreText = shouldTruncate ? '<span class="read-more">קרא עוד</span>' : '';
-
-        newsItemElement.innerHTML = `
-            <img src="${item.system.logo || ''}" alt="${item.system.name || ''} logo" class="logo">
-            <h3>${item.title || ''}</h3>
-            <div class="content">
-                <p>${displayContent}</p>
-                ${readMoreText}
-            </div>
-            <div class="author-info">
-                <img src="${item.author.image || ''}" alt="${item.author.name || ''}">
-                <div class="author-text">
-                    <span class="author-name">${item.author.name || ''}</span>
-                    <span class="author-description">${item.author.description || ''}</span>
-                </div>
-            </div>
-            <span class="date">${formatDate(item.date) || ''}</span>
-        `;
-        newsItemElement.addEventListener('click', () => openModal(item));
-        newsGrid.appendChild(newsItemElement);
-    }
-    
-    currentIndex = endIndex;
-    
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    if (loadMoreBtn) {
-        loadMoreBtn.style.display = currentIndex >= newsItems.length ? 'none' : 'block';
-    }
-}
-
-function openModal(item) {
-    const modal = document.getElementById('newsModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
-    const modalAuthorImg = document.getElementById('modalAuthorImg');
-    const modalAuthorName = document.getElementById('modalAuthorName');
-    const modalAuthorDescription = document.getElementById('modalAuthorDescription');
-    const modalDate = document.getElementById('modalDate');
-
-    if (modal && modalTitle && modalBody && modalAuthorImg && modalAuthorName && modalAuthorDescription && modalDate) {
-        modalTitle.textContent = item.title;
-        modalBody.innerHTML = item.content.replace(/\n/g, '<br>');
-        modalAuthorImg.src = item.author.image;
-        modalAuthorImg.alt = item.author.name;
-        modalAuthorName.textContent = item.author.name;
-        modalAuthorDescription.textContent = item.author.description;
-        modalDate.textContent = formatDate(item.date);
-
-        modal.style.display = 'block';
+window.addEventListener('scroll', function () {
+    const mainBtnRect = mainSupportBtn.getBoundingClientRect();
+    if (mainBtnRect.top <= window.innerHeight && mainBtnRect.bottom >= 0) {
+        floatingBtn.style.opacity = '0';
+        floatingBtn.style.pointerEvents = 'none';
     } else {
-        console.error('One or more modal elements are missing');
+        floatingBtn.style.opacity = '1';
+        floatingBtn.style.pointerEvents = 'auto';
     }
+});
+
+// קרוסלת פידבקים
+
+// קריאת לגוגל סקריפט לקבלת נתונים מאיירטייבל
+async function fetchTestimonials() {
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw83DMuYXyTuCsBnH0s_uOiiRvn1UnqOYMUny-z2gJ8vWN0Egq3rNz_YN5vNAssLxSQ/exec';
+    const SECRET_KEY = '162bbasdkovj3432432!!@csc';
+
+    const url = `${SCRIPT_URL}?key=${SECRET_KEY}`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.error) {
+        console.error('Error fetching testimonials:', data.error);
+        return [];
+    }
+
+    return data;
 }
 
-async function initializeNewsGrid() {
-    const newsGrid = document.getElementById('newsGrid');
-    const loadingSpinner = document.getElementById('loadingSpinner');
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
+let currentTestimonial = 0;
+let testimonialContainer;
+let intervalId;
 
-    if (loadingSpinner) loadingSpinner.style.display = 'block';
-    if (newsGrid) {
-        newsGrid.innerHTML = '';
-        newsGrid.style.display = 'none';
-    }
-    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
-
-    await fetchNewsItems();
-
-    if (loadingSpinner) loadingSpinner.style.display = 'none';
-    if (newsGrid) newsGrid.style.display = 'grid';
-
-    loadNewsItems();
+function createTestimonialElement(testimonial) {
+    const element = document.createElement('div');
+    element.className = 'testimonial';
+    const defaultProfilePic = 'https://i.ibb.co/ByssB3y/image.png';
+    const profilePicSrc = testimonial.profilePic || defaultProfilePic;
+    element.innerHTML = `
+        <p class="testimonial-text">${testimonial.text}</p>
+        <div class="testimonial-author-container">
+            <img src="${profilePicSrc}" alt="תמונת פרופיל של ${testimonial.author.split(',')[0]}" class="profile-pic">
+            <p class="testimonial-author">${testimonial.author}, ${testimonial.description}</p>
+        </div>
+    `;
+    return element;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    initializeNewsGrid();
+async function initializeTestimonials() {
+    testimonialContainer = document.querySelector('.testimonial-container');
+    const loadingContainer = document.querySelector('.loading-container');
+    let testimonials;
 
-const form = document.getElementById('joinForm');
+    try {
+        testimonials = await fetchTestimonials();
+    } catch (error) {
+        console.error('Error fetching testimonials:', error);
+        testimonials = []; // Use an empty array if fetch fails
+    }
 
-if (form) {
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-        
-        const webhookUrl = 'https://hook.integrator.boost.space/xk3ycvp1v7qeho3bdxemaiswvkn2q8bm';
-        
-        fetch(webhookUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
+    if (testimonials.length === 0) {
+        // אם אין נתונים מהסקריפט, השתמש בנתונים הסטטיים
+        testimonials = testimonialsData;
+    }
+
+    testimonials.forEach(testimonial => {
+        testimonialContainer.appendChild(createTestimonialElement(testimonial));
+    });
+
+    // Hide loading spinner and show testimonials
+    loadingContainer.style.display = 'none';
+    testimonialContainer.style.display = 'flex';
+
+    showTestimonial(0);
+
+    // התחלת הקרוסלה האוטומטית
+    intervalId = setInterval(() => changeTestimonial(1), 5000);
+}
+
+function showTestimonial(index) {
+    const testimonials = document.querySelectorAll('.testimonial');
+    testimonials.forEach((testimonial, i) => {
+        testimonial.classList.toggle('active', i === index);
+    });
+    testimonialContainer.style.transform = `translateX(${index * 100}%)`;
+}
+
+function changeTestimonial(direction) {
+    const testimonials = document.querySelectorAll('.testimonial');
+    currentTestimonial = (currentTestimonial + direction + testimonials.length) % testimonials.length;
+    showTestimonial(currentTestimonial);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeTestimonials();
+
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+
+    prevBtn.addEventListener('click', () => {
+        clearInterval(intervalId);
+        changeTestimonial(1);
+        intervalId = setInterval(() => changeTestimonial(1), 5000);
+    });
+
+    nextBtn.addEventListener('click', () => {
+        clearInterval(intervalId);
+        changeTestimonial(-1);
+        intervalId = setInterval(() => changeTestimonial(-1), 5000);
+    });
+});
+
+
+// Social media links
+document.getElementById('facebookLink').addEventListener('click', function (e) {
+    e.preventDefault();
+    window.open('https://www.facebook.com/ShayDigitalServices', '_blank');
+});
+
+document.getElementById('whatsappShare').addEventListener('click', function (e) {
+    e.preventDefault();
+    const shareText = 'היי, אני כבר פרגנתי לשי על העזרה שלו לקהילה שלנו, מזמין גם אותך לפרגן בשיטת Buy me coffee ' + 'https://shayptl.github.io/buy-me-coffee';
+    const whatsappUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText);
+    window.open(whatsappUrl, '_blank');
+});
+
+// Feedback form submission
+document.getElementById('feedbackForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const profession = document.getElementById('profession').value;
+    const feedback = document.getElementById('feedback').value;
+
+    const formData = {
+        name: name,
+        phone: phone,
+        profession: profession,
+        feedback: feedback
+    };
+
+    fetch('https://hook.integrator.boost.space/zd1hat1kl46d46kf03fgqs2a3jarx8wq', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(result => {
-            console.log('Success:', result);
-            if (result === 'Accepted') {
-                alert('הטופס נשלח בהצלחה!');
-                form.reset();
+            if (response.ok) {
+                this.reset();
+                alert('תודה על הפירגון!');
             } else {
-                throw new Error('Unexpected response');
+                throw new Error('בעיה בשליחת הטופס');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('אירעה שגיאה בשליחת הטופס. אנא נסה שוב.');
+            alert('אירעה שגיאה בשליחת הטופס. נא נסה שוב מאוחר יותר.');
         });
-    });
-} else {
-    console.error('Join form not found');
-}
-
-    const modal = document.getElementById('newsModal');
-    const closeBtn = document.querySelector('.close');
-    if (closeBtn && modal) {
-        closeBtn.onclick = function() {
-            modal.style.display = 'none';
-        }
-    }
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    }
-
-    const appreciateBtn = document.getElementById('appreciateBtn');
-    const floatingAppreciateBtn = document.getElementById('floatingAppreciateBtn');
-
-    function openAppreciationLink(e) {
-        e.preventDefault();
-        window.open('https://shayptl.github.io/buy-me-coffee', '_blank');
-    }
-
-    if (appreciateBtn) {
-        appreciateBtn.addEventListener('click', openAppreciationLink);
-    }
-    if (floatingAppreciateBtn) {
-        floatingAppreciateBtn.addEventListener('click', openAppreciationLink);
-    }
-
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', loadNewsItems);
-    }
-
-    window.addEventListener('resize', function() {
-        clearTimeout(window.resizeTimer);
-        window.resizeTimer = setTimeout(function() {
-            const newsGrid = document.getElementById('newsGrid');
-            if (newsGrid) {
-                newsGrid.innerHTML = '';
-                currentIndex = 0;
-                loadNewsItems();
-            }
-        }, 250);
-    });
-
-    const mainAppreciateBtn = document.getElementById('appreciateBtn');
-    if (mainAppreciateBtn && floatingAppreciateBtn) {
-        window.addEventListener('scroll', function () {
-            const mainBtnRect = mainAppreciateBtn.getBoundingClientRect();
-            if (mainBtnRect.top <= window.innerHeight && mainBtnRect.bottom >= 0) {
-                floatingAppreciateBtn.style.opacity = '0';
-                floatingAppreciateBtn.style.pointerEvents = 'none';
-            } else {
-                floatingAppreciateBtn.style.opacity = '1';
-                floatingAppreciateBtn.style.pointerEvents = 'auto';
-            }
-        });
-    }
 });
