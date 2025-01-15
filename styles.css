@@ -483,6 +483,8 @@
            gap: 15px;
            margin-top: 20px;
            justify-content: flex-start;
+           position: relative;
+           z-index: 1; 
         }
         
         .app-btn {
@@ -497,12 +499,6 @@
         
         .app-btn:hover {
            background-color: var(--accent-color);
-        }
-
-        a.app-btn {
-            color: var(--white);  /* חובה להוסיף כי זה a tag */
-            display: inline-block; /* חשוב להוסיף */
-            text-align: center; /* מרכוז טקסט בכפתור */
         }
 
         .app::before {
