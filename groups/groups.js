@@ -45,7 +45,7 @@ function createGroupCard(group) {
             </div>
         </div>
         ${group.category ? `<div class="group-category">${group.category}</div>` : ''}
-        <button class="group-join-btn" onclick="joinGroup('${group.whatsappLink}', '${group.name}')">
+        <button class="group-join-btn" data-whatsapp-link="${group.whatsappLink}" data-group-name="${group.name}">
             <i class="fab fa-whatsapp"></i>
             הצטרפות לקבוצה
         </button>
@@ -121,12 +121,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize the groups page
     initializeGroupsPage();
     
-    // Add click tracking for analytics (optional)
+    // Add click tracking for analytics and handle group join clicks
     document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('group-join-btn')) {
-            // Track group join clicks
-            const groupName = e.target.closest('.group-card').querySelector('.group-name').textContent;
-            console.log(`Group join button clicked: ${groupName}`);
+        if (e.target.classList.contains('group-join-btn') || e.target.closest('.group-join-btn')) {
+            const button = e.target.classList.contains('group-join-btn') ? e.target : e.target.closest('.group-join-btn');
+            const whatsappLink = button.getAttribute('data-whatsapp-link');
+            const groupName = button.getAttribute('data-group-name');
+            
+            if (whatsappLink && groupName) {
+                console.log(`Group join button clicked: ${groupName}`);
+                joinGroup(whatsappLink, groupName);
+            }
         }
     });
 
