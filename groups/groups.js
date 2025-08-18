@@ -33,10 +33,10 @@ function isBot() {
 function createGroupCard(group) {
     const defaultLogo = 'https://i.ibb.co/f8XrnHj/image.png'; // Same as site favicon
     const logoSrc = group.logoUrl || defaultLogo;
-    
+
     const card = document.createElement('div');
     card.className = 'group-card fadeInUp';
-    
+
     card.innerHTML = `
         <div class="group-header">
             <img src="${logoSrc}" alt="לוגו ${group.name}" class="group-logo" onerror="this.src='${defaultLogo}'">
@@ -50,7 +50,7 @@ function createGroupCard(group) {
             הצטרפות לקבוצה
         </button>
     `;
-    
+
     return card;
 }
 
@@ -62,10 +62,10 @@ function joinGroup(whatsappLink, groupName) {
         alert('אירעה שגיאה. אנא נסה שוב מאוחר יותר.');
         return;
     }
-    
+
     // Log the join attempt (optional)
     console.log(`User joining group: ${groupName}`);
-    
+
     // Add small delay to make it feel more natural
     setTimeout(() => {
         window.open(whatsappLink, '_blank');
@@ -77,19 +77,19 @@ async function initializeGroupsPage() {
     const loadingContainer = document.querySelector('.loading-container');
     const groupsContainer = document.querySelector('.groups-container');
     const noGroupsContainer = document.querySelector('.no-groups');
-    
+
     try {
         const groups = await fetchGroups();
-        
+
         // Hide loading spinner
         loadingContainer.style.display = 'none';
-        
+
         if (groups.length === 0) {
             // Show no groups message
             noGroupsContainer.style.display = 'block';
             return;
         }
-        
+
         // Create and append group cards
         groups.forEach((group, index) => {
             const card = createGroupCard(group);
@@ -97,10 +97,10 @@ async function initializeGroupsPage() {
             card.style.animationDelay = `${(index * 0.1) + 0.2}s`;
             groupsContainer.appendChild(card);
         });
-        
+
         // Show groups container
         groupsContainer.style.display = 'grid';
-        
+
     } catch (error) {
         console.error('Error initializing groups page:', error);
         loadingContainer.style.display = 'none';
@@ -120,14 +120,14 @@ function handleImageError(img) {
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize the groups page
     initializeGroupsPage();
-    
+
     // Add click tracking for analytics and handle group join clicks
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('group-join-btn') || e.target.closest('.group-join-btn')) {
             const button = e.target.classList.contains('group-join-btn') ? e.target : e.target.closest('.group-join-btn');
             const whatsappLink = button.getAttribute('data-whatsapp-link');
             const groupName = button.getAttribute('data-group-name');
-            
+
             if (whatsappLink && groupName) {
                 console.log(`Group join button clicked: ${groupName}`);
                 joinGroup(whatsappLink, groupName);
@@ -174,10 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
             window.open(channelLink, '_blank');
         });
     }
-});
 
-// Floating home button functionality
-document.addEventListener('DOMContentLoaded', () => {
+    // Floating home button functionality
     const floatingBtn = document.querySelector('.btn-floating-home');
     
     // Show/hide floating button based on scroll
@@ -191,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
 
 // Share group functionality (optional for future)
 function shareGroup(groupName, groupLink) {
