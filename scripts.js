@@ -31,7 +31,7 @@ async function fetchTestimonials() {
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw83DMuYXyTuCsBnH0s_uOiiRvn1UnqOYMUny-z2gJ8vWN0Egq3rNz_YN5vNAssLxSQ/exec';
     const SECRET_KEY = '162bbasdkovj3432432!!@csc';
 
-    const url = `${SCRIPT_URL}?key=${SECRET_KEY}`;
+    const url = `${SCRIPT_URL}?key=${SECRET_KEY}&endpoint=testimonials`;
     const response = await fetch(url);
     const data = await response.json();
 
