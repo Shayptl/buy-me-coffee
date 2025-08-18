@@ -56,6 +56,15 @@ function createGroupCard(group) {
 
 // Handle group join with bot detection
 function joinGroup(whatsappLink, groupName) {
+    console.log(`joinGroup called with:`, { whatsappLink, groupName });
+    
+    // Validate inputs
+    if (!whatsappLink || !groupName) {
+        console.error('Invalid parameters for joinGroup:', { whatsappLink, groupName });
+        alert('אירעה שגיאה בנתוני הקבוצה. אנא נסה שוב.');
+        return;
+    }
+
     // Check if user is a bot using honeypot
     if (isBot()) {
         console.log('Bot detected, blocking access');
@@ -66,9 +75,22 @@ function joinGroup(whatsappLink, groupName) {
     // Log the join attempt (optional)
     console.log(`User joining group: ${groupName}`);
 
+    // Validate WhatsApp link format
+    if (!whatsappLink.includes('whatsapp.com') && !whatsappLink.includes('chat.whatsapp.com')) {
+        console.error('Invalid WhatsApp link format:', whatsappLink);
+        alert('קישור הקבוצה לא תקין. אנא פנה למנהל.');
+        return;
+    }
+
     // Add small delay to make it feel more natural
     setTimeout(() => {
-        window.open(whatsappLink, '_blank');
+        try {
+            window.open(whatsappLink, '_blank');
+            console.log(`Successfully opened WhatsApp link: ${whatsappLink}`);
+        } catch (error) {
+            console.error('Error opening WhatsApp link:', error);
+            alert('אירעה שגיאה בפתיחת הקישור. אנא נסה שוב.');
+        }
     }, 100);
 }
 
@@ -92,11 +114,14 @@ async function initializeGroupsPage() {
 
         // Create and append group cards
         groups.forEach((group, index) => {
+            console.log(`Creating card for group:`, group);
             const card = createGroupCard(group);
             // Add staggered animation delay
             card.style.animationDelay = `${(index * 0.1) + 0.2}s`;
             groupsContainer.appendChild(card);
         });
+
+        console.log(`Created ${groups.length} group cards`);
 
         // Show groups container
         groupsContainer.style.display = 'grid';
@@ -123,14 +148,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add click tracking for analytics and handle group join clicks
     document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('group-join-btn') || e.target.closest('.group-join-btn')) {
-            const button = e.target.classList.contains('group-join-btn') ? e.target : e.target.closest('.group-join-btn');
+        // Handle button clicks including child elements (icon and text)
+        let button = null;
+        if (e.target.classList.contains('group-join-btn')) {
+            button = e.target;
+        } else if (e.target.closest('.group-join-btn')) {
+            button = e.target.closest('.group-join-btn');
+        }
+
+        if (button) {
+            e.preventDefault(); // Prevent any default behavior
             const whatsappLink = button.getAttribute('data-whatsapp-link');
             const groupName = button.getAttribute('data-group-name');
 
             if (whatsappLink && groupName) {
                 console.log(`Group join button clicked: ${groupName}`);
                 joinGroup(whatsappLink, groupName);
+            } else {
+                console.error('Missing data attributes:', { whatsappLink, groupName });
             }
         }
     });
