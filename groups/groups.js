@@ -40,10 +40,11 @@ function createGroupCard(group) {
     card.innerHTML = `
         <div class="group-header">
             <img src="${logoSrc}" alt="לוגו ${group.name}" class="group-logo" onerror="this.src='${defaultLogo}'">
-            <h3 class="group-name">${group.name}</h3>
+            <div class="group-title-container">
+                <h3 class="group-name">${group.name} <span class="group-description-inline">${group.description}</span></h3>
+            </div>
         </div>
         ${group.category ? `<div class="group-category">${group.category}</div>` : ''}
-        <p class="group-description">${group.description}</p>
         <button class="group-join-btn" onclick="joinGroup('${group.whatsappLink}', '${group.name}')">
             <i class="fab fa-whatsapp"></i>
             הצטרפות לקבוצה
@@ -128,6 +129,46 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(`Group join button clicked: ${groupName}`);
         }
     });
+
+    // Social media links functionality
+    const facebookLink = document.getElementById('facebookLink');
+    const whatsappShare = document.getElementById('whatsappShare');
+
+    if (facebookLink) {
+        facebookLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.open('https://www.facebook.com/ShayDigitalServices', '_blank');
+        });
+    }
+
+    const youtubeLink = document.getElementById('youtubeLink');
+    if (youtubeLink) {
+        youtubeLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            // TODO: Replace with actual YouTube channel link when provided
+            window.open('https://www.youtube.com/@shaydigitalservices', '_blank');
+        });
+    }
+
+    if (whatsappShare) {
+        whatsappShare.addEventListener('click', function (e) {
+            e.preventDefault();
+            const shareText = 'היי, אני בקבוצות הווצאפ של שי ומקבל עזרה מעולה! מזמין גם אותך להצטרף ' + 'https://shayptl.github.io/buy-me-coffee/groups';
+            const whatsappUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText);
+            window.open(whatsappUrl, '_blank');
+        });
+    }
+
+    // Channel join functionality
+    const joinChannelBtn = document.getElementById('joinChannelBtn');
+    if (joinChannelBtn) {
+        joinChannelBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            // TODO: Replace with actual channel link when provided
+            const channelLink = 'https://whatsapp.com/channel/0029VaN1jLe6wZQ9C2U3dU16';
+            window.open(channelLink, '_blank');
+        });
+    }
 });
 
 // Floating home button functionality
