@@ -42,6 +42,8 @@
     background: linear-gradient(45deg, transparent, rgba(108, 92, 231, 0.05), transparent);
     transform: rotate(45deg);
     transition: all 0.5s ease;
+    z-index: 1;
+    pointer-events: none;
 }
 
 .group-card:hover::before {
@@ -122,6 +124,9 @@
     justify-content: center;
     gap: 8px;
     margin-top: auto;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
 }
 
 .group-join-btn:hover {
@@ -321,47 +326,47 @@
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .group-card {
         height: auto;
         min-height: 250px;
     }
-    
+
     .group-header {
         flex-direction: column;
         text-align: center;
         margin-bottom: 15px;
     }
-    
+
     .group-logo {
         margin: 0 0 10px 0;
     }
-    
+
     .group-name {
         font-size: 1.2em;
     }
-    
+
     .info-section {
         padding: 20px;
     }
-    
+
     .back-link {
         margin-top: 15px;
     }
-    
+
     .channel-card {
         flex-direction: column;
         text-align: center;
         gap: 20px;
         padding: 20px;
     }
-    
+
     .channel-info {
         flex-direction: column;
         text-align: center;
         gap: 15px;
     }
-    
+
     .channel-icon {
         margin: 0;
         font-size: 2.5em;
@@ -369,9 +374,26 @@
 }
 
 /* Animation delays for staggered loading */
-.group-card:nth-child(1) { animation-delay: 0.1s; }
-.group-card:nth-child(2) { animation-delay: 0.2s; }
-.group-card:nth-child(3) { animation-delay: 0.3s; }
-.group-card:nth-child(4) { animation-delay: 0.4s; }
-.group-card:nth-child(5) { animation-delay: 0.5s; }
-.group-card:nth-child(6) { animation-delay: 0.6s; }
+.group-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.group-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.group-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.group-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.group-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.group-card:nth-child(6) {
+    animation-delay: 0.6s;
+}
