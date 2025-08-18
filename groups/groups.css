@@ -82,7 +82,7 @@
 }
 
 .group-description-inline {
-    font-size: 1em;
+    font-size: 0.8em;
     font-weight: normal;
     color: var(--text-color);
     display: inline;
